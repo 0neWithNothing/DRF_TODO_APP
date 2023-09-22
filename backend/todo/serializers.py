@@ -1,10 +1,15 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
 from .models import Task
 from api.serializers import UserPublicSerializer
 
+User = get_user_model()
+
+
 class TaskSerializer(serializers.ModelSerializer):
-    author = UserPublicSerializer(read_only=True)
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    completed = serializers.DateTimeField(read_only=True)
     class Meta:
         model = Task
         fields = [
@@ -12,5 +17,6 @@ class TaskSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'created',
+            'completed',
             'author'
         ]
