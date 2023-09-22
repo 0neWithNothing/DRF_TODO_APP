@@ -5,23 +5,21 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
+from rest_framework.decorators import api_view
+from drf_spectacular.utils import extend_schema
 
 from .models import Task
-from .serializers import TaskSerializer, UserSerializer
+from .serializers import TaskSerializer
 from api.mixins import TaskQuerySetMixin
 
-class TaskViewSet(viewsets.ModelViewSet):
-    serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return Task.objects.filter(author=self.request.user.id, completed__isnull=True)
+# class TaskViewSet(viewsets.ModelViewSet):
+#     serializer_class = TaskSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
-
-class UserCreateAPIView(generics.CreateAPIView):
-    model = get_user_model()
-    permission_classes = []
-    serializer_class = UserSerializer
+#     def get_queryset(self):
+#         return Task.objects.filter(author=self.request.user.id, completed__isnull=True)
 
 
 # CRUD TODO

@@ -1,17 +1,9 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import generics
+from django.contrib.auth import get_user_model
+from .serializers import UserSerializer
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
 
-        # Add custom claims
-        token['username'] = user.username
-        # ...
-
-        return token
-    
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+class UserCreateAPIView(generics.CreateAPIView):
+    model = get_user_model()
+    permission_classes = []
+    serializer_class = UserSerializer

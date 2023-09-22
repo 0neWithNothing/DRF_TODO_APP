@@ -1,14 +1,13 @@
 from django.urls import path, include
-from rest_framework import routers
+# from rest_framework import routers
 
 from . import views
 
-router = routers.DefaultRouter()
-router.register(r'tasks', views.TaskViewSet, basename='Task')
+# router = routers.DefaultRouter()
+# router.register(r'tasks', views.TaskViewSet, basename='Task')
 
 urlpatterns = [
-    path('v2/', include(router.urls)),
-    path('register/', views.UserCreateAPIView.as_view()),
+    # path('v2/', include(router.urls)),
     path('', views.TaskListCreateAPIView.as_view()),
     path('completed/', views.TaskListCompletedAPIView.as_view()),
     path('<int:pk>/', views.TaskDetailAPIView.as_view()),
